@@ -15,6 +15,8 @@
 @property (nonatomic) CLLocationManager *manager;
 @property NSString *photoLocation;
 
+@property NSData *imageData;
+
 @property IBOutlet UITextField *location;
 @property IBOutlet UITextField *date;
 @property IBOutlet UITextField *incidentType;

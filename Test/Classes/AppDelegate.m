@@ -108,6 +108,7 @@ static NSString * const OAuthRedirectURI        = @"testsfdc:///mobilesdk/detect
         
         
         self.initialLoginSuccessBlock = ^(SFOAuthInfo *info) {
+            NSLog(@"Access Token: %@", [SFAccountManager sharedInstance].credentials.accessToken);
             [weakSelf setupRootViewController];
         };
         self.initialLoginFailureBlock = ^(SFOAuthInfo *info, NSError *error) {
@@ -189,6 +190,11 @@ static NSString * const OAuthRedirectURI        = @"testsfdc:///mobilesdk/detect
     [self log:SFLogLevelDebug msg:@"Login host changed notification received.  Resetting app."];
     [self initializeAppViewState];
     [[SFAuthenticationManager sharedManager] loginWithCompletion:self.initialLoginSuccessBlock failure:self.initialLoginFailureBlock];
+}
+
+
+- (void)authManagerDidAuthenticate:(SFAuthenticationManager *)manager credentials:(SFOAuthCredentials *)credentials authInfo:(SFOAuthInfo *)info {
+    
 }
 
 

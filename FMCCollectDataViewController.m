@@ -15,7 +15,12 @@
 #import "SFOAuthInfo.h"
 #import "SFLogger.h"
 
+
 #import "SFRestAPI+Blocks.h"
+
+#import "zkSforce.h"
+#import "zkAuthentication.h"
+
 
 
 @interface FMCCollectDataViewController ()
@@ -50,8 +55,6 @@
     _manager.distanceFilter = kCLDistanceFilterNone;
     
     [_manager startUpdatingLocation];
-    
-    
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -144,8 +147,10 @@
 
     if(image) {
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-        NSData *imageData = UIImagePNGRepresentation(image);
-        [imageData writeToFile:imagePath atomically:YES];
+        _imageData = UIImageJPEGRepresentation(image, 0.5);
+        
+        
+        [_imageData writeToFile:imagePath atomically:YES];
         _photoLocation = imagePath;
     }
 }
@@ -167,14 +172,44 @@
         if ([contactDictionary isKindOfClass:[NSDictionary class]]) {
             CLLocationCoordinate2D coordinate = _currentLocation.coordinate;
             
-            NSString *issueObject = @"Issues__c";
-            NSDictionary *issueFields = @{@"category__c":@"Street Repair", @"type__c":@"broken side walk", @"Issue_Reporter__c":contactDictionary[@"id"], @"location__Latitude__s":@(coordinate.latitude),
-                                          @"location__Longitude__s":@(coordinate.longitude)};
+            NSString *issueObject = @"FMC__Issues__c";
+            NSDictionary *issueFields = @{@"FMC__category__c":@"Street Repair", @"FMC__type__c":@"broken side walk", @"FMC__Issue_Reporter__c":contactDictionary[@"id"], @"FMC__location__Latitude__s":@(coordinate.latitude),
+                                          @"FMC__location__Longitude__s":@(coordinate.longitude)};
             
             SFRestRequest *issueCreateRequest = [[SFRestAPI sharedInstance] requestForCreateWithObjectType:issueObject fields:issueFields];
-            [[SFRestAPI sharedInstance] send:issueCreateRequest delegate:self];
+
             [[SFRestAPI sharedInstance] sendRESTRequest:issueCreateRequest failBlock:nil completeBlock:^(NSDictionary *issueDictionary) {
+                
+                SFOAuthCredentials *credentials = [SFAccountManager sharedInstance].credentials;
+                
+                ZKSforceClient *client = [[ZKSforceClient alloc] init];
+                [client loginWithRefreshToken:credentials.refreshToken authUrl:credentials.instanceUrl oAuthConsumerKey:credentials.clientId];
+                
                 NSString *fileName = [NSString stringWithFormat:@"%@_%@_%@.png", issueDictionary[@"id"], contactDictionary[@"id"], NSDate.date.description];
+                
+            
+            
+                
+                ZKSObject *attachment = [[ZKSObject alloc] initWithType:@"Attachment"];
+                [attachment setFieldValue:fileName field:@"Name"];
+                [attachment setFieldValue:issueDictionary[@"id"] field:@"ParentId"];
+                [attachment setFieldValue:[_imageData base64Encoding] field:@"Body"];
+                
+                NSArray *results = [client create:@[attachment]];
+                
+                ZKSaveResult *sr = [results objectAtIndex:0];
+                if ([sr success])
+                    NSLog(@"new issues file id %@", [sr id]);
+                else
+                    NSLog(@"error creating issues file %@ %@", [sr statusCode], [sr message]);
+
+
+//                NSLog(@"Access token: %@", [SFAccountManager sharedInstance].credentials.accessToken);
+//                NSLog(@"Refresh token: %@", [SFAccountManager sharedInstance].credentials.refreshToken);
+                
+//                [SFRestAPI sharedInstance]
+                
+                
             }];
             
         }
