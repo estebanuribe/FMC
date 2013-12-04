@@ -43,6 +43,16 @@
 {
     [super viewDidLoad];
     
+    _incident_types = @[@"Crime Issue", @"Street Issue", @"Traffic Issue", @"Other Issue"];
+    _incident_categories = @{@"Crime Issue":@[@"Gang Activity", @"Graffiti", @"Other Issue"],
+                             @"Street Issue":@[@"Pot Hole", @"Broken Side Walk", @"Broken Street Light", @"Other Issue"],
+                             @"Traffic Issue": @[@"Pot Holes", @"Broken Traffic Light", @"Missing Lane Markers", @"Other Issue"],
+                             @"Other Issue":@[@"Hipsters", @"Hackers", @"Other Issue"]};
+    
+    _type = YES;
+    _category = NO;
+    [self.picker selectRow:INT16_MAX/2 + 2 inComponent:0 animated:NO];
+    [self.picker selectRow:INT16_MAX/2 inComponent:1 animated:NO];
     _manager = [[CLLocationManager alloc] init];
     if (CLLocationManager.locationServicesEnabled == NO) {
         NSLog(@"Can't locate anything");
@@ -159,6 +169,36 @@
     NSLog(@"image location: %@", image);
 }
 
+- (IBAction)updateLocation:(id)sender {
+    _manager.delegate = self;
+    _manager.desiredAccuracy = kCLLocationAccuracyBest;
+    _manager.distanceFilter = kCLDistanceFilterNone;
+    
+    [_manager startUpdatingLocation];
+}
+
+- (IBAction)changeIncidentType:(id)sender {
+    self.incidentCategory.enabled = NO;
+    self.location.enabled = NO;
+    self.camera.enabled = NO;
+    self.type = YES;
+    self.category = NO;
+    self.containerView.hidden = NO;
+    self.containerView.userInteractionEnabled = YES;
+    [self.containerView removeFromSuperview];
+    CGRect frame = self.containerView.frame;
+    frame.origin.y = self.view.frame.size.height - self.containerView.frame.size.height;
+    self.containerView.frame = frame;
+    [self.view addSubview:self.containerView];
+    self.picker.delegate = self;
+    self.picker.dataSource = self;
+    [self.picker reloadAllComponents];
+}
+
+- (IBAction)changeIncidentCategory:(id)sender {
+    
+}
+
 - (void)submit:(id)sender {
     NSString *firstName = @"Esteban";
     NSString *lastName = @"Uribe";
@@ -173,7 +213,9 @@
             CLLocationCoordinate2D coordinate = _currentLocation.coordinate;
             
             NSString *issueObject = @"FMC__Issues__c";
-            NSDictionary *issueFields = @{@"FMC__category__c":@"Street Repair", @"FMC__type__c":@"broken side walk", @"FMC__Issue_Reporter__c":contactDictionary[@"id"], @"FMC__location__Latitude__s":@(coordinate.latitude),
+            _selected_type = _incident_types[[self.picker selectedRowInComponent:0]];
+            _selected_cat = _incident_categories[_selected_cat][[self.picker selectedRowInComponent:1]];
+            NSDictionary *issueFields = @{@"FMC__category__c":_selected_cat, @"FMC__type__c":_selected_type, @"FMC__Issue_Reporter__c":contactDictionary[@"id"], @"FMC__location__Latitude__s":@(coordinate.latitude),
                                           @"FMC__location__Longitude__s":@(coordinate.longitude)};
             
             SFRestRequest *issueCreateRequest = [[SFRestAPI sharedInstance] requestForCreateWithObjectType:issueObject fields:issueFields];
@@ -202,19 +244,83 @@
                     NSLog(@"new issues file id %@", [sr id]);
                 else
                     NSLog(@"error creating issues file %@ %@", [sr statusCode], [sr message]);
-
-
-//                NSLog(@"Access token: %@", [SFAccountManager sharedInstance].credentials.accessToken);
-//                NSLog(@"Refresh token: %@", [SFAccountManager sharedInstance].credentials.refreshToken);
-                
-//                [SFRestAPI sharedInstance]
-                
-                
             }];
             
         }
     }];
 }
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 2;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+/*    if (component == 0) {
+        return _incident_types.count;
+    } else if (component == 1) {
+        NSString *typeName = _incident_types[[pickerView selectedRowInComponent:0]];
+        NSArray *cats = _incident_categories[typeName];
+        return cats.count;
+    }*/
+    return INT16_MAX;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (component == 0) {
+        row = row % _incident_types.count;
+        return _incident_types[row];
+    } else if (component == 1) {
+        row = row % _incident_categories.count;
+        NSString *typeName = _incident_types[[pickerView selectedRowInComponent:0]];
+        NSArray *cats = _incident_categories[typeName];
+        return cats[row];
+    }
+    return @"";
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if (component == 0) {
+        [pickerView reloadComponent:1];
+    }
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    
+    UILabel *label = (UILabel *)view;
+    if(!label ) {
+        CGRect frame = CGRectZero;
+        frame.size = [pickerView rowSizeForComponent:component];
+        label = [[UILabel alloc] initWithFrame:frame];
+        label.font = [UIFont systemFontOfSize:12];
+        label.textColor = [UIColor blackColor];
+        label.textAlignment = NSTextAlignmentCenter;
+    }
+    
+    if (component == 0) {
+        row = row % _incident_types.count;
+        label.text = _incident_types[row];
+    } else if (component == 1) {
+        NSInteger selectedRow = [pickerView selectedRowInComponent:0] % _incident_types.count;
+        NSString *typeName = _incident_types[selectedRow];
+        NSArray *cats = _incident_categories[typeName];
+        row = row % cats.count;
+        label.text = cats[row];
+    }
+    
+    return label;
+/*    if (component == 1) {
+        UILabel *label = (UILabel *)view;
+        if (!label) {
+            label = [[UILabel alloc] init];
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.numberOfLines = 2;
+            label.font = [label.font fontWithSize:10];
+        }
+        return label;
+    }*/
+    
+}
+
 
 
 @end

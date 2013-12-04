@@ -202,14 +202,14 @@
 		5BFEA624183C92B300AAEDEE /* zkXmlDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zkXmlDeserializer.m; sourceTree = "<group>"; };
 		5BFEA625183C92B300AAEDEE /* ZKXMLSerializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKXMLSerializable.h; sourceTree = "<group>"; };
 		5BFEA64F183C99E700AAEDEE /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
-		824A9DD51724E16400C9BD79 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		824A9DD51724E16400C9BD79 /* FMC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FMC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		824A9DD81724E16400C9BD79 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		824A9DDA1724E16400C9BD79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		824A9DDC1724E16400C9BD79 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		824A9DE01724E16400C9BD79 /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
+		824A9DE01724E16400C9BD79 /* FMC-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FMC-Info.plist"; sourceTree = "<group>"; };
 		824A9DE21724E16400C9BD79 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		824A9DE41724E16400C9BD79 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		824A9DE61724E16400C9BD79 /* Test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Test-Prefix.pch"; sourceTree = "<group>"; };
+		824A9DE61724E16400C9BD79 /* FMC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FMC-Prefix.pch"; sourceTree = "<group>"; };
 		824A9E311724E2A900C9BD79 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		824A9E321724E2A900C9BD79 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		824A9E341724E45000C9BD79 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -510,7 +510,7 @@
 		824A9DD61724E16400C9BD79 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				824A9DD51724E16400C9BD79 /* Test.app */,
+				824A9DD51724E16400C9BD79 /* FMC.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -553,10 +553,10 @@
 		824A9DDF1724E16400C9BD79 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				824A9DE01724E16400C9BD79 /* Test-Info.plist */,
+				824A9DE01724E16400C9BD79 /* FMC-Info.plist */,
 				824A9DE11724E16400C9BD79 /* InfoPlist.strings */,
 				824A9DE41724E16400C9BD79 /* main.m */,
-				824A9DE61724E16400C9BD79 /* Test-Prefix.pch */,
+				824A9DE61724E16400C9BD79 /* FMC-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -811,9 +811,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		824A9DD41724E16400C9BD79 /* Test */ = {
+		824A9DD41724E16400C9BD79 /* FMC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 824A9DFB1724E16400C9BD79 /* Build configuration list for PBXNativeTarget "Test" */;
+			buildConfigurationList = 824A9DFB1724E16400C9BD79 /* Build configuration list for PBXNativeTarget "FMC" */;
 			buildPhases = (
 				824A9DD11724E16400C9BD79 /* Sources */,
 				824A9DD21724E16400C9BD79 /* Frameworks */,
@@ -823,9 +823,9 @@
 			);
 			dependencies = (
 			);
-			name = Test;
+			name = FMC;
 			productName = Test;
-			productReference = 824A9DD51724E16400C9BD79 /* Test.app */;
+			productReference = 824A9DD51724E16400C9BD79 /* FMC.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -837,7 +837,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = estebanuribe;
 			};
-			buildConfigurationList = 824A9DD01724E16400C9BD79 /* Build configuration list for PBXProject "Test" */;
+			buildConfigurationList = 824A9DD01724E16400C9BD79 /* Build configuration list for PBXProject "FMC" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -849,7 +849,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				824A9DD41724E16400C9BD79 /* Test */,
+				824A9DD41724E16400C9BD79 /* FMC */,
 			);
 		};
 /* End PBXProject section */
@@ -1013,7 +1013,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Test/Test-Prefix.pch";
+				GCC_PREFIX_HEADER = "Test/FMC-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/Test/Dependencies/SalesforceOAuth/Headers",
 					"$(SRCROOT)/Test/Dependencies/SalesforceNetworkSDK/Headers",
@@ -1022,7 +1022,7 @@
 					"$(SRCROOT)/Test/Dependencies/SalesforceCommonUtils/Headers",
 					"$(SDKROOT)/usr/include/libxml2",
 				);
-				INFOPLIST_FILE = "Test/Test-Info.plist";
+				INFOPLIST_FILE = "Test/FMC-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Test/Dependencies/openssl\"",
@@ -1038,7 +1038,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = FMC;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1047,7 +1047,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Test/Test-Prefix.pch";
+				GCC_PREFIX_HEADER = "Test/FMC-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/Test/Dependencies/SalesforceOAuth/Headers",
 					"$(SRCROOT)/Test/Dependencies/SalesforceNetworkSDK/Headers",
@@ -1056,7 +1056,7 @@
 					"$(SRCROOT)/Test/Dependencies/SalesforceCommonUtils/Headers",
 					"$(SDKROOT)/usr/include/libxml2",
 				);
-				INFOPLIST_FILE = "Test/Test-Info.plist";
+				INFOPLIST_FILE = "Test/FMC-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Test/Dependencies/openssl\"",
@@ -1072,7 +1072,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = FMC;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1080,7 +1080,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		824A9DD01724E16400C9BD79 /* Build configuration list for PBXProject "Test" */ = {
+		824A9DD01724E16400C9BD79 /* Build configuration list for PBXProject "FMC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				824A9DF91724E16400C9BD79 /* Debug */,
@@ -1089,7 +1089,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		824A9DFB1724E16400C9BD79 /* Build configuration list for PBXNativeTarget "Test" */ = {
+		824A9DFB1724E16400C9BD79 /* Build configuration list for PBXNativeTarget "FMC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				824A9DFC1724E16400C9BD79 /* Debug */,

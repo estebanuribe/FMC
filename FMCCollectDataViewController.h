@@ -9,19 +9,33 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface FMCCollectDataViewController : UIViewController
+@interface FMCCollectDataViewController : UIViewController {
+    NSArray         *_incident_types;
+    NSDictionary    *_incident_categories;
+    
+    NSString        *_selected_type;
+    NSString        *_selected_cat;
+}
 
-@property (nonatomic) CLLocation *currentLocation;
+@property (nonatomic) CLLocation        *currentLocation;
 @property (nonatomic) CLLocationManager *manager;
-@property NSString *photoLocation;
 
-@property NSData *imageData;
+@property NSString              *photoLocation;
+@property NSData                *imageData;
 
-@property IBOutlet UITextField *location;
-@property IBOutlet UITextField *date;
-@property IBOutlet UITextField *incidentType;
-@property IBOutlet UITextField *incidentCategory;
-@property IBOutlet UIButton    *camera;
+@property IBOutlet UITextField  *location;
+@property IBOutlet UITextField  *date;
+@property IBOutlet UITextField  *incidentType;
+@property IBOutlet UITextField  *incidentCategory;
+@property IBOutlet UIButton     *camera;
+
+@property IBOutlet UIPickerView *picker;
+
+@property IBOutlet UIView       *containerView;
+
+
+@property BOOL type;
+@property BOOL category;
 
 - (IBAction)updateLocation:(id)sender;
 - (IBAction)changeDate:(id)sender;
